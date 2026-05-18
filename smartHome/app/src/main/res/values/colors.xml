@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#BB86FC</color>
+    <color name="colorPrimaryVariant">#3700B3</color>
+    <color name="colorSecondary">#03DAC6</color>
+
+    <color name="bg_color">#F5F5F5</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="dark_card_bg">#212121</color>
+
+    <color name="colorNormal">#4CAF50</color>
+    <color name="colorDanger">#F44336</color>
+
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_on_dark">#FFFFFF</color>
+
+    <color name="temp_color">#FF9800</color>
+    <color name="humidity_color">#2196F3</color>
+    <color name="gas_color">#9C27B0</color>
+    <color name="current_color">#FFEB3B</color>
+
+    <color name="overlay_light">#40FFFFFF</color>
+    <color name="overlay_dark">#80000000</color>
+</resources>

@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dashboard_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/dashboard_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_dashboard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dashboard"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold" />
+
+        <!-- Rooms TabLayout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_rooms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            app:tabMode="scrollable"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/text_secondary" />
+
+        <!-- Sensor Grid -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_sensors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:nestedScrollingEnabled="false" />
+
+        <Button
+            android:id="@+id/btn_refresh"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/refresh"
+            app:icon="@android:drawable/stat_notify_sync" />
+
+        <!-- AI Insight Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_ai_insight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_help"
+                        app:tint="@color/colorPrimary" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Analyse IA SmartHome"
+                        android:layout_marginStart="8dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_ai_insight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Analyse en cours..."
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Statistics Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/statistics"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_sensor_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/stats_card"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/combined_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Devices Control -->
+        <TextView
+            android:id="@+id/tv_devices_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/devices"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/devices_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/view_light_overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/overlay_light"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Light Control Row -->
+                    <RelativeLayout
+                        android:id="@+id/row_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/icon_light"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/btn_star_big_off"
+                            app:tint="@color/text_secondary"
+                            android:layout_centerVertical="true"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_toEndOf="@id/icon_light"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/light"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary"/>
+                            <TextView
+                                android:id="@+id/status_light"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="OFF"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                    <!-- Fan Control Row -->
+                    <RelativeLayout
+                        android:id="@+id/row_fan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+                        <ImageView
+                            android:id="@+id/icon_fan"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/ic_menu_rotate"
+                            app:tint="@color/text_secondary"
+                            android:layout_centerVertical="true"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_toEndOf="@id/icon_fan"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fan"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary"/>
+                            <TextView
+                                android:id="@+id/status_fan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="STOPPED"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_fan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                    <!-- Alarm Control Row -->
+                    <RelativeLayout
+                        android:id="@+id/row_alarm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+                        <ImageView
+                            android:id="@+id/icon_alarm"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/ic_lock_idle_lock"
+                            app:tint="@color/text_secondary"
+                            android:layout_centerVertical="true"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_toEndOf="@id/icon_alarm"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/alarm"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary"/>
+                            <TextView
+                                android:id="@+id/status_alarm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DISARMED"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_alarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                    <!-- Coffee Control Row (Cuisine) -->
+                    <RelativeLayout
+                        android:id="@+id/row_coffee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone">
+                        <ImageView
+                            android:id="@+id/icon_coffee"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/ic_menu_today"
+                            app:tint="@color/text_secondary"
+                            android:layout_centerVertical="true"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_toEndOf="@id/icon_coffee"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Machine à café"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary"/>
+                            <TextView
+                                android:id="@+id/status_coffee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ÉTEINTE"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_coffee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                    <!-- Shutters Control Row (Chambre) -->
+                    <RelativeLayout
+                        android:id="@+id/row_shutters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone">
+                        <ImageView
+                            android:id="@+id/icon_shutters"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            app:tint="@color/text_secondary"
+                            android:layout_centerVertical="true"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_toEndOf="@id/icon_shutters"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Volets"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary"/>
+                            <TextView
+                                android:id="@+id/status_shutters"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="OUVERTS"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_shutters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                    <!-- Watering Control Row (Jardin) -->
+                    <RelativeLayout
+                        android:id="@+id/row_watering"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone">
+                        <ImageView
+                            android:id="@+id/icon_watering"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/ic_menu_compass"
+                            app:tint="@color/text_secondary"
+                            android:layout_centerVertical="true"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_toEndOf="@id/icon_watering"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Arrosage"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary"/>
+                            <TextView
+                                android:id="@+id/status_watering"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ARRÊTÉ"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_watering"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>
